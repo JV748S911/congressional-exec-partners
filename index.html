@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALE Dashboard • CEP Seaglass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
+        .card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+    </style>
+</head>
+<body class="text-slate-200">
+    <div class="max-w-6xl mx-auto p-8">
+        <header class="flex justify-between items-center mb-12 border-b border-slate-700 pb-6">
+            <div>
+                <h1 class="text-4xl font-bold text-white flex items-center gap-3">
+                    🦾 CALE Dashboard
+                    <span class="text-emerald-400 text-sm font-mono px-3 py-1 bg-emerald-950 rounded-full">LIVE</span>
+                </h1>
+                <p class="text-slate-400 mt-1">Congressional Executive Partners • Seaglass Franchise Brokerage</p>
+            </div>
+            <div class="text-right">
+                <div class="text-xs uppercase tracking-widest text-slate-500">Lucas 🚀 • 2026-04-08</div>
+                <a href="https://github.com/JV748S911/congressional-exec-partners" target="_blank" 
+                   class="text-sky-400 hover:text-sky-300 text-sm mt-2 inline-flex items-center gap-1">
+                    → Repo
+                </a>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Status -->
+            <div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-6 card">
+                <h2 class="text-lg font-semibold mb-4 text-sky-300">System Status</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between"><span class="text-slate-400">MVP Complete</span><span class="text-emerald-400 font-medium">~90%</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Families Active</span><span class="text-white font-medium">8 / 8</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Daily Lead Cron</span><span class="text-amber-400 font-medium">OFF (ready)</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Email Queue</span><span class="text-emerald-400 font-medium">8 drafts ready</span></div>
+                </div>
+                <button onclick="alert('Cron activation coming next — say the word!')" 
+                        class="mt-6 w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl text-sm font-medium">
+                    ENABLE DAILY 24-LEAD CRON
+                </button>
+            </div>
+
+            <!-- Hot Leads -->
+            <div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-6 card md:col-span-2">
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-rose-300">
+                    🔥 Hot Leads (Score >0.5)
+                </h2>
+                <table class="w-full text-sm">
+                    <thead><tr class="border-b border-slate-700 text-left text-slate-400"><th class="pb-3">Prospect</th><th class="pb-3">Trigger</th><th class="pb-3">Score</th><th class="pb-3">Notes</th></tr></thead>
+                    <tbody class="text-slate-300">
+                        <tr class="border-b border-slate-800"><td class="py-3">Exec A</td><td>New lobby filing (FEC)</td><td class="font-mono text-emerald-400">0.89</td><td>Kalorama fit</td></tr>
+                        <tr><td class="py-3">Cong B</td><td>Committee shift</td><td class="font-mono text-emerald-400">0.76</td><td>McLean commercial</td></tr>
+                    </tbody>
+                </table>
+                <p class="text-xs text-slate-500 mt-4">* Proto from 04-07 • Non-outbound until personalized. Run fresh scan for more.</p>
+            </div>
+        </div>
+
+        <!-- Families -->
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold mb-6 text-white flex items-center gap-2">CALE Families <span class="text-xs px-2.5 py-0.5 bg-slate-700 rounded">8 VERTICALS</span></h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🏛️<br><span class="block mt-3 font-medium">Gov</span></div>
+                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🏠<br><span class="block mt-3 font-medium">Resi-NonGov</span></div>
+                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🏬<br><span class="block mt-3 font-medium">Com-NonGov</span></div>
+                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">📊<br><span class="block mt-3 font-medium">Data</span></div>
+                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🏢<br><span class="block mt-3 font-medium">Multifam</span></div>
+                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">📋<br><span class="block mt-3 font-medium">Office</span></div>
+                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">⭐<br><span class="block mt-3 font-medium">Specialty</span></div>
+                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🌳<br><span class="block mt-3 font-medium">Land</span></div>
+            </div>
+        </div>
+
+        <footer class="text-center text-slate-500 text-xs pt-8 border-t border-slate-800">
+            Built by Lucas for Jesse • Sharp • Warm • Resourceful • 
+            <a href="https://github.com/JV748S911/congressional-exec-partners/tree/gh-pages" class="hover:text-slate-300">View source on gh-pages branch</a>
+        </footer>
+    </div>
+</body>
+</html>
