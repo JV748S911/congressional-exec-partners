@@ -1,0 +1,11 @@
+langchain==0.3.3
+langgraph==0.2.20
+xai-sdk
+openai  # fallback
+twilio
+sendgrid
+airtable-python-wrapper
+psycopg2-binary
+redis
+python-dotenv
+schedule
