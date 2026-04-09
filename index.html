@@ -11,6 +11,7 @@
         .card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
         .family-card { cursor: pointer; }
         .active { border-color: #22d3ee; background-color: #164e63; }
+        .pipeline-bar { height: 6px; background: linear-gradient(to right, #22d3ee, #a5f3fc); }
     </style>
 </head>
 <body class="text-slate-200">
@@ -30,6 +31,41 @@
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- CRM Pipeline -->
+            <div class="lg:col-span-12 bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-violet-300">CRM Pipeline</h2>
+                    <button onclick="addLead()" class="px-5 py-2 bg-violet-600 hover:bg-violet-500 rounded-2xl text-sm font-medium">+ New Lead / Broker</button>
+                </div>
+                <div class="grid grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-4xl font-light text-emerald-400">24</div>
+                        <div class="text-xs text-slate-400 tracking-widest mt-1">CALE LEADS</div>
+                        <div class="pipeline-bar mt-3 rounded"></div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-light text-sky-400">12</div>
+                        <div class="text-xs text-slate-400 tracking-widest mt-1">QUALIFIED</div>
+                        <div class="pipeline-bar mt-3 rounded w-3/4"></div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-light text-amber-400">5</div>
+                        <div class="text-xs text-slate-400 tracking-widest mt-1">PROPOSAL</div>
+                        <div class="pipeline-bar mt-3 rounded w-1/2"></div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-light text-rose-400">2</div>
+                        <div class="text-xs text-slate-400 tracking-widest mt-1">CLOSED WON</div>
+                        <div class="pipeline-bar mt-3 rounded w-1/4 bg-rose-400"></div>
+                    </div>
+                </div>
+                <div class="mt-8 text-xs text-slate-400 flex justify-between">
+                    <div>GCI Model: <span class="text-white">$7.2M Yr1 target</span></div>
+                    <div>10 Broker Targets Out • 3 Replies Pending</div>
+                </div>
+            </div>
+
+            <!-- Previous sections (Status, Hot Leads, Family Panel, Families) remain -->
             <div class="lg:col-span-7 space-y-6">
                 <div class="bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
                     <h2 class="text-xl font-semibold mb-6 text-sky-300">System Status</h2>
@@ -80,7 +116,7 @@
         </div>
 
         <footer class="text-center text-xs text-slate-500 mt-16">
-            Built by Lucas for Jesse • DC weather in °F
+            Built by Lucas for Jesse • CRM + Weather + CALE integrated
         </footer>
     </div>
 
@@ -95,11 +131,7 @@
                 if ([3,45,48,51,53,55,61,63,65,71,73,75,77,80,81,82,95,96,99].includes(code)) emoji = '☁️';
                 if ([61,63,65,80,81,82,95,96,99].includes(code)) emoji = '🌧️';
                 if ([71,73,75,77].includes(code)) emoji = '❄️';
-                
-                document.getElementById('weather-content').innerHTML = `
-                    ${emoji} ${Math.round(w.temperature_2m)}°F<br>
-                    <span class="text-sm text-slate-400">Feels ${Math.round(w.apparent_temperature)}°F</span>
-                `;
+                document.getElementById('weather-content').innerHTML = `${emoji} ${Math.round(w.temperature_2m)}°F<br><span class="text-sm text-slate-400">Feels ${Math.round(w.apparent_temperature)}°F</span>`;
             } catch(e) {
                 document.getElementById('weather-content').innerHTML = 'Weather unavailable';
             }
@@ -128,16 +160,5 @@
         }
 
         function generateEmails(family) {
-            alert(`CALE-Email hub triggered for ${family} family — 3 personalized drafts would appear here.`);
-        }
-
-        function enableCron() {
-            alert("Daily 24-lead cron enabled across all families. Check back tomorrow for fresh scans.");
-        }
-
-        window.onload = () => {
-            loadWeather();
-        };
-    </script>
-</body>
-</html>
+            alert(`CALE-Email hub triggered for ${family} family — 3 personalized drafts would appear here
+...(truncated)...
