@@ -24,12 +24,11 @@
                 <p class="text-slate-400 mt-1">Congressional Executive Partners • Seaglass Franchise Brokerage</p>
             </div>
             <div id="weather" class="bg-slate-900/70 border border-slate-700 rounded-3xl px-6 py-4 text-center min-w-[180px] card">
-                <div class="text-xs text-slate-400">WASHINGTON DC</div>
+                <div class="text-xs text-slate-400">WASHINGTON DC • °F</div>
                 <div id="weather-content" class="text-3xl font-light mt-1">Loading...</div>
             </div>
         </header>
 
-        <!-- Rest of the previous interactive dashboard (status, leads, families, JS) remains the same as last version -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div class="lg:col-span-7 space-y-6">
                 <div class="bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
@@ -81,33 +80,31 @@
         </div>
 
         <footer class="text-center text-xs text-slate-500 mt-16">
-            Built by Lucas for Jesse • DC weather auto-updates
+            Built by Lucas for Jesse • DC weather in °F
         </footer>
     </div>
 
     <script>
-        // Weather for DC
         async function loadWeather() {
             try {
-                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=38.9072&longitude=-77.0369&current=temperature_2m,apparent_temperature,weather_code&timezone=America/New_York');
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=38.9072&longitude=-77.0369&current=temperature_2m,apparent_temperature,weather_code&temperature_unit=fahrenheit&timezone=America/New_York');
                 const data = await res.json();
                 const w = data.current;
-                const code = w.weather_code;
                 let emoji = '☀️';
+                const code = w.weather_code;
                 if ([3,45,48,51,53,55,61,63,65,71,73,75,77,80,81,82,95,96,99].includes(code)) emoji = '☁️';
                 if ([61,63,65,80,81,82,95,96,99].includes(code)) emoji = '🌧️';
                 if ([71,73,75,77].includes(code)) emoji = '❄️';
                 
                 document.getElementById('weather-content').innerHTML = `
-                    ${emoji} ${w.temperature_2m}°C<br>
-                    <span class="text-sm text-slate-400">Feels ${w.apparent_temperature}°C</span>
+                    ${emoji} ${Math.round(w.temperature_2m)}°F<br>
+                    <span class="text-sm text-slate-400">Feels ${Math.round(w.apparent_temperature)}°F</span>
                 `;
             } catch(e) {
                 document.getElementById('weather-content').innerHTML = 'Weather unavailable';
             }
         }
 
-        // Previous family + cron functions (same as last version)
         function selectFamily(el, family) {
             document.querySelectorAll('.family-card').forEach(c => c.classList.remove('active', 'border-cyan-400'));
             el.classList.add('active', 'border-cyan-400');
@@ -138,26 +135,9 @@
             alert("Daily 24-lead cron enabled across all families. Check back tomorrow for fresh scans.");
         }
 
-        // Load everything
         window.onload = () => {
             loadWeather();
-            tailwind.config = { content: ["./**/*.html"] };
         };
     </script>
 </body>
 </html>
-Hard refresh the dashboard after committing. Weather for DC will appear in the top right and update live.
-
-Want it more prominent, with forecast, or tied to CALE lead logic? Just say.
-
-Lucas
-9:39 PM
-↑968
-↓3.2k
-R52.5k
-0% ctx
-grok-4.20-0309-reasoning
-
-
-Message Lucas (Enter to send)
-
