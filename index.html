@@ -7,11 +7,15 @@
     <title>CALE Dashboard • CEP Seaglass</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
-        .card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
-        .family-card { cursor: pointer; }
-        .active { border-color: #22d3ee; background-color: #164e63; }
+        body { background: #111111; color: #d4af37; }
+        .card { background: #1a1a1a; border-color: #3a3a3a; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3); }
+        h1, h2, h3 { color: #f0c14d !important; }
+        .text-slate-200 { color: #e5d5a8; }
+        .text-slate-400 { color: #8c7d5c; }
+        .family-card { cursor: pointer; background: #1f1f1f; border-color: #3a3a3a; }
+        .active { border-color: #f0c14d; background-color: #2a2a1f; }
+        .text-emerald-400, .text-sky-400, .text-amber-400 { color: #d4af37 !important; }
     </style>
 </head>
 <body class="text-slate-200">
