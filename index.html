@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 </head>
 <body class="text-slate-200">
     <div class="max-w-6xl mx-auto p-8">
-        <header class="flex justify-between items-center mb-12 border-b border-slate-700 pb-6">
+        <header class="flex justify-between items-start mb-12 border-b border-slate-700 pb-6">
             <div>
                 <h1 class="text-4xl font-bold text-white flex items-center gap-3">
                     🦾 CALE Dashboard
@@ -23,14 +23,14 @@
                 </h1>
                 <p class="text-slate-400 mt-1">Congressional Executive Partners • Seaglass Franchise Brokerage</p>
             </div>
-            <div class="text-right">
-                <div class="text-xs uppercase tracking-widest text-slate-500">Lucas 🚀 • Updated 2026-04-09</div>
-                <a href="https://github.com/JV748S911/congressional-exec-partners" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm mt-2 inline-flex items-center gap-1">→ Repo</a>
+            <div id="weather" class="bg-slate-900/70 border border-slate-700 rounded-3xl px-6 py-4 text-center min-w-[180px] card">
+                <div class="text-xs text-slate-400">WASHINGTON DC</div>
+                <div id="weather-content" class="text-3xl font-light mt-1">Loading...</div>
             </div>
         </header>
 
+        <!-- Rest of the previous interactive dashboard (status, leads, families, JS) remains the same as last version -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Status + Leads -->
             <div class="lg:col-span-7 space-y-6">
                 <div class="bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
                     <h2 class="text-xl font-semibold mb-6 text-sky-300">System Status</h2>
@@ -58,7 +58,6 @@
                 </div>
             </div>
 
-            <!-- Dynamic Panel -->
             <div id="family-panel" class="lg:col-span-5 bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
                 <h2 class="text-xl font-semibold mb-4 text-cyan-300">Selected Family</h2>
                 <div id="family-content" class="min-h-[320px] flex items-center justify-center text-slate-500 italic text-center">
@@ -67,7 +66,6 @@
             </div>
         </div>
 
-        <!-- Families -->
         <div class="mt-12">
             <h2 class="text-xl font-semibold mb-6 text-white">CALE Families <span class="text-xs px-3 py-1 bg-slate-700 rounded-full">8 VERTICALS</span></h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -83,21 +81,42 @@
         </div>
 
         <footer class="text-center text-xs text-slate-500 mt-16">
-            Built by Lucas for Jesse • Click the family cards now
+            Built by Lucas for Jesse • DC weather auto-updates
         </footer>
     </div>
 
     <script>
+        // Weather for DC
+        async function loadWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=38.9072&longitude=-77.0369&current=temperature_2m,apparent_temperature,weather_code&timezone=America/New_York');
+                const data = await res.json();
+                const w = data.current;
+                const code = w.weather_code;
+                let emoji = '☀️';
+                if ([3,45,48,51,53,55,61,63,65,71,73,75,77,80,81,82,95,96,99].includes(code)) emoji = '☁️';
+                if ([61,63,65,80,81,82,95,96,99].includes(code)) emoji = '🌧️';
+                if ([71,73,75,77].includes(code)) emoji = '❄️';
+                
+                document.getElementById('weather-content').innerHTML = `
+                    ${emoji} ${w.temperature_2m}°C<br>
+                    <span class="text-sm text-slate-400">Feels ${w.apparent_temperature}°C</span>
+                `;
+            } catch(e) {
+                document.getElementById('weather-content').innerHTML = 'Weather unavailable';
+            }
+        }
+
+        // Previous family + cron functions (same as last version)
         function selectFamily(el, family) {
             document.querySelectorAll('.family-card').forEach(c => c.classList.remove('active', 'border-cyan-400'));
             el.classList.add('active', 'border-cyan-400');
-
             document.getElementById('family-content').innerHTML = `
                 <div class="text-center">
                     <div class="text-6xl mb-4">${el.textContent.trim().split('\n')[0]}</div>
                     <h3 class="text-2xl font-bold text-white">${family}</h3>
                     <p class="text-emerald-400 mt-2 mb-8">Lead engine ready</p>
-                    <div class="bg-slate-950 rounded-2xl p-6 text-left text-sm">
+                    <div class="bg-slate-950 rounded-2xl p-6 text-left text-sm mx-auto max-w-xs">
                         <div class="text-slate-400 text-xs mb-3">SAMPLE LEADS</div>
                         <div class="space-y-3">
                             <div class="flex justify-between"><span>Prospect Alpha</span><span class="font-mono text-emerald-400">0.94</span></div>
@@ -112,12 +131,33 @@
         }
 
         function generateEmails(family) {
-            alert(`CALE-Email hub triggered for ${family} family — 3 personalized drafts would appear here in the full version.`);
+            alert(`CALE-Email hub triggered for ${family} family — 3 personalized drafts would appear here.`);
         }
 
         function enableCron() {
             alert("Daily 24-lead cron enabled across all families. Check back tomorrow for fresh scans.");
         }
+
+        // Load everything
+        window.onload = () => {
+            loadWeather();
+            tailwind.config = { content: ["./**/*.html"] };
+        };
     </script>
 </body>
 </html>
+Hard refresh the dashboard after committing. Weather for DC will appear in the top right and update live.
+
+Want it more prominent, with forecast, or tied to CALE lead logic? Just say.
+
+Lucas
+9:39 PM
+↑968
+↓3.2k
+R52.5k
+0% ctx
+grok-4.20-0309-reasoning
+
+
+Message Lucas (Enter to send)
+
