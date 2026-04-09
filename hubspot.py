@@ -11,7 +11,7 @@ import requests
 from datetime import datetime
 
 # Configuration
-HUBSPOT_ACCESS_TOKEN = os.getenv("HUBSPOT_ACCESS_TOKEN")  # Set as environment variable
+HUBSPOT_ACCESS_TOKEN = os.getenv("HUBSPOT_ACCESS_TOKEN") or "YOUR_TOKEN_HERE"  # Set via environment variable (never commit real token)
 HEADERS = {
     "Authorization": f"Bearer {HUBSPOT_ACCESS_TOKEN}",
     "Content-Type": "application/json"
