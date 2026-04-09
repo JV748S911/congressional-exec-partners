@@ -8,15 +8,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background: #0a0a0a url('cep-seal.png') center center / 85% no-repeat fixed;
-            color: #d4af37;
+            background: #050505 url('cep-seal.png') center center / cover fixed;
+            color: #f0c14d;
             position: relative;
+            margin: 0;
+            padding: 0;
         }
         body::before {
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 10, 10, 0.92);
+            background: rgba(5, 5, 5, 0.75);
             z-index: -1;
         }
         .card { background: #1a1a1a; border-color: #3a3a3a; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
