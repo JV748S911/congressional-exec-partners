@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,8 @@
         body { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
         .card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+        .family-card { cursor: pointer; }
+        .active { border-color: #22d3ee; background-color: #164e63; }
     </style>
 </head>
 <body class="text-slate-200">
@@ -22,65 +24,100 @@
                 <p class="text-slate-400 mt-1">Congressional Executive Partners • Seaglass Franchise Brokerage</p>
             </div>
             <div class="text-right">
-                <div class="text-xs uppercase tracking-widest text-slate-500">Lucas 🚀 • 2026-04-08</div>
-                <a href="https://github.com/JV748S911/congressional-exec-partners" target="_blank" 
-                   class="text-sky-400 hover:text-sky-300 text-sm mt-2 inline-flex items-center gap-1">
-                    → Repo
-                </a>
+                <div class="text-xs uppercase tracking-widest text-slate-500">Lucas 🚀 • Updated 2026-04-09</div>
+                <a href="https://github.com/JV748S911/congressional-exec-partners" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm mt-2 inline-flex items-center gap-1">→ Repo</a>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <!-- Status -->
-            <div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-6 card">
-                <h2 class="text-lg font-semibold mb-4 text-sky-300">System Status</h2>
-                <div class="space-y-4">
-                    <div class="flex justify-between"><span class="text-slate-400">MVP Complete</span><span class="text-emerald-400 font-medium">~90%</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Families Active</span><span class="text-white font-medium">8 / 8</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Daily Lead Cron</span><span class="text-amber-400 font-medium">OFF (ready)</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Email Queue</span><span class="text-emerald-400 font-medium">8 drafts ready</span></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Status + Leads -->
+            <div class="lg:col-span-7 space-y-6">
+                <div class="bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
+                    <h2 class="text-xl font-semibold mb-6 text-sky-300">System Status</h2>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="space-y-5">
+                            <div class="flex justify-between items-center"><span class="text-slate-400">MVP Complete</span><span class="text-emerald-400 font-semibold">~90%</span></div>
+                            <div class="flex justify-between items-center"><span class="text-slate-400">Families Active</span><span class="text-white font-semibold">8 / 8</span></div>
+                            <div class="flex justify-between items-center"><span class="text-slate-400">Daily Lead Cron</span><span class="text-amber-400 font-semibold">OFF — ready</span></div>
+                        </div>
+                        <div>
+                            <button onclick="enableCron()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-4 rounded-2xl text-sm font-semibold">ENABLE DAILY 24-LEAD CRON</button>
+                        </div>
+                    </div>
                 </div>
-                <button onclick="alert('Cron activation coming next — say the word!')" 
-                        class="mt-6 w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl text-sm font-medium">
-                    ENABLE DAILY 24-LEAD CRON
-                </button>
+
+                <div class="bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
+                    <h2 class="text-xl font-semibold mb-6 text-rose-300">🔥 Hot Leads (Score >0.5)</h2>
+                    <table class="w-full text-sm">
+                        <thead><tr class="border-b border-slate-700 text-left text-slate-400"><th class="pb-3">Prospect</th><th class="pb-3">Trigger</th><th class="pb-3 text-right">Score</th><th class="pb-3">Notes</th></tr></thead>
+                        <tbody class="text-slate-300">
+                            <tr class="border-b border-slate-800"><td class="py-3">Exec A</td><td>New lobby filing (FEC)</td><td class="text-right font-mono text-emerald-400">0.89</td><td>Kalorama fit</td></tr>
+                            <tr><td class="py-3">Cong B</td><td>Committee shift</td><td class="text-right font-mono text-emerald-400">0.76</td><td>McLean commercial</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- Hot Leads -->
-            <div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-6 card md:col-span-2">
-                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-rose-300">
-                    🔥 Hot Leads (Score >0.5)
-                </h2>
-                <table class="w-full text-sm">
-                    <thead><tr class="border-b border-slate-700 text-left text-slate-400"><th class="pb-3">Prospect</th><th class="pb-3">Trigger</th><th class="pb-3">Score</th><th class="pb-3">Notes</th></tr></thead>
-                    <tbody class="text-slate-300">
-                        <tr class="border-b border-slate-800"><td class="py-3">Exec A</td><td>New lobby filing (FEC)</td><td class="font-mono text-emerald-400">0.89</td><td>Kalorama fit</td></tr>
-                        <tr><td class="py-3">Cong B</td><td>Committee shift</td><td class="font-mono text-emerald-400">0.76</td><td>McLean commercial</td></tr>
-                    </tbody>
-                </table>
-                <p class="text-xs text-slate-500 mt-4">* Proto from 04-07 • Non-outbound until personalized. Run fresh scan for more.</p>
+            <!-- Dynamic Panel -->
+            <div id="family-panel" class="lg:col-span-5 bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
+                <h2 class="text-xl font-semibold mb-4 text-cyan-300">Selected Family</h2>
+                <div id="family-content" class="min-h-[320px] flex items-center justify-center text-slate-500 italic text-center">
+                    Click any family card below
+                </div>
             </div>
         </div>
 
         <!-- Families -->
-        <div class="mb-8">
-            <h2 class="text-lg font-semibold mb-6 text-white flex items-center gap-2">CALE Families <span class="text-xs px-2.5 py-0.5 bg-slate-700 rounded">8 VERTICALS</span></h2>
+        <div class="mt-12">
+            <h2 class="text-xl font-semibold mb-6 text-white">CALE Families <span class="text-xs px-3 py-1 bg-slate-700 rounded-full">8 VERTICALS</span></h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🏛️<br><span class="block mt-3 font-medium">Gov</span></div>
-                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🏠<br><span class="block mt-3 font-medium">Resi-NonGov</span></div>
-                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🏬<br><span class="block mt-3 font-medium">Com-NonGov</span></div>
-                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">📊<br><span class="block mt-3 font-medium">Data</span></div>
-                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🏢<br><span class="block mt-3 font-medium">Multifam</span></div>
-                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">📋<br><span class="block mt-3 font-medium">Office</span></div>
-                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">⭐<br><span class="block mt-3 font-medium">Specialty</span></div>
-                <div class="bg-slate-900/60 border border-slate-700 rounded-2xl p-5 card text-center">🌳<br><span class="block mt-3 font-medium">Land</span></div>
+                <div onclick="selectFamily(this, 'Gov')" class="family-card bg-slate-900/60 hover:bg-slate-800 border-2 border-transparent rounded-3xl p-8 text-center">🏛️<br><span class="block mt-4 font-semibold">Government</span></div>
+                <div onclick="selectFamily(this, 'Resi-NonGov')" class="family-card bg-slate-900/60 hover:bg-slate-800 border-2 border-transparent rounded-3xl p-8 text-center">🏠<br><span class="block mt-4 font-semibold">Residential Non-Gov</span></div>
+                <div onclick="selectFamily(this, 'Com-NonGov')" class="family-card bg-slate-900/60 hover:bg-slate-800 border-2 border-transparent rounded-3xl p-8 text-center">🏬<br><span class="block mt-4 font-semibold">Commercial Non-Gov</span></div>
+                <div onclick="selectFamily(this, 'Data')" class="family-card bg-slate-900/60 hover:bg-slate-800 border-2 border-transparent rounded-3xl p-8 text-center">📊<br><span class="block mt-4 font-semibold">Data</span></div>
+                <div onclick="selectFamily(this, 'Multifam')" class="family-card bg-slate-900/60 hover:bg-slate-800 border-2 border-transparent rounded-3xl p-8 text-center">🏢<br><span class="block mt-4 font-semibold">Multifamily</span></div>
+                <div onclick="selectFamily(this, 'Office')" class="family-card bg-slate-900/60 hover:bg-slate-800 border-2 border-transparent rounded-3xl p-8 text-center">📋<br><span class="block mt-4 font-semibold">Office</span></div>
+                <div onclick="selectFamily(this, 'Specialty')" class="family-card bg-slate-900/60 hover:bg-slate-800 border-2 border-transparent rounded-3xl p-8 text-center">⭐<br><span class="block mt-4 font-semibold">Specialty</span></div>
+                <div onclick="selectFamily(this, 'Land')" class="family-card bg-slate-900/60 hover:bg-slate-800 border-2 border-transparent rounded-3xl p-8 text-center">🌳<br><span class="block mt-4 font-semibold">Land</span></div>
             </div>
         </div>
 
-        <footer class="text-center text-slate-500 text-xs pt-8 border-t border-slate-800">
-            Built by Lucas for Jesse • Sharp • Warm • Resourceful • 
-            <a href="https://github.com/JV748S911/congressional-exec-partners/tree/gh-pages" class="hover:text-slate-300">View source on gh-pages branch</a>
+        <footer class="text-center text-xs text-slate-500 mt-16">
+            Built by Lucas for Jesse • Click the family cards now
         </footer>
     </div>
+
+    <script>
+        function selectFamily(el, family) {
+            document.querySelectorAll('.family-card').forEach(c => c.classList.remove('active', 'border-cyan-400'));
+            el.classList.add('active', 'border-cyan-400');
+
+            document.getElementById('family-content').innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-4">${el.textContent.trim().split('\n')[0]}</div>
+                    <h3 class="text-2xl font-bold text-white">${family}</h3>
+                    <p class="text-emerald-400 mt-2 mb-8">Lead engine ready</p>
+                    <div class="bg-slate-950 rounded-2xl p-6 text-left text-sm">
+                        <div class="text-slate-400 text-xs mb-3">SAMPLE LEADS</div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between"><span>Prospect Alpha</span><span class="font-mono text-emerald-400">0.94</span></div>
+                            <div class="flex justify-between"><span>Prospect Beta</span><span class="font-mono text-emerald-400">0.87</span></div>
+                        </div>
+                    </div>
+                    <button onclick="generateEmails('${family}')" class="mt-8 px-10 py-3 bg-sky-600 hover:bg-sky-500 rounded-2xl text-sm font-medium">
+                        Generate 3 Emails
+                    </button>
+                </div>
+            `;
+        }
+
+        function generateEmails(family) {
+            alert(`CALE-Email hub triggered for ${family} family — 3 personalized drafts would appear here in the full version.`);
+        }
+
+        function enableCron() {
+            alert("Daily 24-lead cron enabled across all families. Check back tomorrow for fresh scans.");
+        }
+    </script>
 </body>
 </html>
