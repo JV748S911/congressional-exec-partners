@@ -116,15 +116,10 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card">
-                    <h2 class="text-xl font-semibold mb-6 text-rose-300">🔥 Hot Leads</h2>
-                    <table class="w-full text-sm">
-                        <thead><tr class="border-b border-slate-700 text-left text-slate-400"><th class="pb-3">Prospect</th><th class="pb-3">Trigger</th><th class="pb-3 text-right">Score</th><th class="pb-3">Notes</th></tr></thead>
-                        <tbody class="text-slate-300">
-                            <tr class="border-b border-slate-800"><td class="py-3">Exec A</td><td>New lobby filing (FEC)</td><td class="text-right font-mono text-emerald-400">0.89</td><td>Kalorama fit</td></tr>
-                            <tr><td class="py-3">Cong B</td><td>Committee shift</td><td class="text-right font-mono text-emerald-400">0.76</td><td>McLean commercial</td></tr>
-                        </tbody>
-                    </table>
+                <div class="bg-slate-900/70 border border-slate-700 rounded-3xl p-8 card" id="qualified-leads-card">
+                    <h2 class="text-xl font-semibold mb-6 text-rose-300 flex items-center gap-2">🔥 Qualified Leads <span id="lead-count" class="text-xs bg-rose-950 text-rose-400 px-2 py-0.5 rounded-full">Loading...</span></h2>
+                    <div id="leads-table" class="text-sm"></div>
+                    <div id="leads-loading" class="text-center py-8 text-slate-400">Loading live CALE leads from GitHub...</div>
                 </div>
             </div>
 
@@ -200,8 +195,50 @@
             alert("Full CRM view opened (HubSpot pipeline synced with CALE scores, Jane/Mike/Sarah routing, and GCI tracking).");
         }
 
+        async function loadQualifiedLeads() {
+            const container = document.getElementById('leads-table');
+            const loading = document.getElementById('leads-loading');
+            const countEl = document.getElementById('lead-count');
+
+            try {
+                const res = await fetch('https://api.github.com/repos/JV748S911/congressional-exec-partners/issues?labels=lead&state=open&per_page=10');
+                const issues = await res.json();
+
+                countEl.textContent = `${issues.length} live`;
+                loading.style.display = 'none';
+
+                if (issues.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400 py-8 text-center">No open qualified leads yet. Run ingestion to create some.</p>`;
+                    return;
+                }
+
+                let html = `<table class="w-full text-sm"><thead><tr class="border-b border-slate-700 text-left text-slate-400"><th class="pb-3">Prospect</th><th class="pb-3">Score</th><th class="pb-3">Broker</th><th class="pb-3">Status</th></tr></thead><tbody class="text-slate-300">`;
+
+                issues.forEach(issue => {
+                    const scoreMatch = issue.labels.find(l => l.name.startsWith('score-'));
+                    const score = scoreMatch ? scoreMatch.name.replace('score-', '') : '—';
+                    const brokerLabel = issue.labels.find(l => ['jane','mike','sarah'].includes(l.name));
+                    const broker = brokerLabel ? brokerLabel.name.charAt(0).toUpperCase() + brokerLabel.name.slice(1) : 'Unassigned';
+                    const isUrgent = issue.labels.some(l => l.name === 'urgent');
+
+                    html += `<tr class="border-b border-slate-800 hover:bg-slate-800/50">
+                        <td class="py-3 font-medium">${issue.title.replace('Lead: ', '')}</td>
+                        <td class="py-3 font-mono ${parseFloat(score) >= 8 ? 'text-emerald-400' : 'text-amber-400'}">${score}</td>
+                        <td class="py-3">${broker}</td>
+                        <td class="py-3"><span class="px-3 py-1 text-xs rounded-full ${isUrgent ? 'bg-red-900 text-red-300' : 'bg-emerald-900 text-emerald-300'}">${isUrgent ? 'URGENT' : 'ACTIVE'}</span></td>
+                    </tr>`;
+                });
+
+                html += `</tbody></table>`;
+                container.innerHTML = html;
+            } catch (e) {
+                loading.innerHTML = 'Failed to load leads. Check GitHub connection.';
+            }
+        }
+
         window.onload = () => {
             console.log("✅ CALE Dashboard loaded with HubSpot integration");
+            loadQualifiedLeads();
         };
     </script>
 </body>
